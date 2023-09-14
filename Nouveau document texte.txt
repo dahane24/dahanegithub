@@ -1,0 +1,60 @@
+echo "# dahane24" >> README.md
+git init
+git add README.md
+git commit -m "first commit"
+git branch -M main
+git remote add origin https://github.com/dahane24/dahane24.git
+git push -u origin maingit remote add origin https://github.com/dahane24/dahane24.git
+git branch -M main
+git push -u origin main from pytube import YouTube
+
+# Replace 'VIDEO_URL' with the URL of the YouTube video
+video_url = 'VIDEO_URL'
+
+# Create a YouTube object
+yt = YouTube(video_url)
+
+# Get the highest resolution thumbnail image
+thumbnail_url = yt.thumbnail_url
+
+# Download the thumbnail image
+yt.set_thumbnail(thumbnail_url, 'thumbnail.jpg')
+import vimeo
+
+# Replace 'ACCESS_TOKEN' with your Vimeo access token
+access_token = 'ACCESS_TOKEN'
+
+# Replace 'VIDEO_URL' with the URL of the Vimeo video
+video_url = 'VIDEO_URL'
+
+# Initialize the Vimeo client
+client = vimeo.VimeoClient(
+    token=access_token,
+    key='YOUR_CLIENT_ID',
+    secret='YOUR_CLIENT_SECRET'
+)
+
+# Extract video ID from the video URL
+video_id = video_url.split('/')[-1]
+
+# Get video download links
+video_data = client.get(f'/videos/{video_id}')
+
+# Find the download link for the video (usually the highest quality)
+download_url = None
+for file in video_data['files']:
+    if file['quality'] == 'source':
+        download_url = file['link']
+
+if download_url:
+    # Download the video
+    import requests
+
+    response = requests.get(download_url, stream=True)
+    with open('video.mp4', 'wb') as f:
+        for chunk in response.iter_content(chunk_size=1024):
+            if chunk:
+                f.write(chunk)
+else:
+    print('Video download link not found.')
+
